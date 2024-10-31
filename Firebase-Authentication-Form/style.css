@@ -1,0 +1,200 @@
+/* Basic reset  */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+.body{
+    background-color: rgb(15, 144, 225);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    transition-delay: 0.5s;
+}
+
+.slide{
+    background-color: rgb(239, 55, 73);
+
+}
+.container{
+    background-color: rgb(49, 50, 50);
+    width: 70%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+}
+
+.signup {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1em;
+    z-index: 10;
+    position: relative;
+}
+
+.signup h1 ,.login h1 , .form h1{
+    color: #000000;
+    font-size: 1.5em;
+}
+
+.signup button , .login button{
+    padding:  10px 20px;
+    margin: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+}
+
+.signup button:hover, .login button:hover{
+    top: 5px;
+}
+
+.formbox{
+    width: 37%;
+    position: absolute;
+    left: 15%;
+    height: 550px;
+    z-index: 1000;
+    background-color: #ffffff;
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    overflow: hidden;
+    padding: 20px 5px;
+    
+}
+
+.formbox form h1 {
+    padding: 3px 8px ;
+}
+
+.slide .formbox{
+  left: 50%;
+}
+/* .formbox .form{
+    width: 90%;
+    height: 580px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+.formbox .form{
+    width: 90%;
+    height: 100%;
+    padding: 20px;
+    position: absolute;
+    top: 0%;
+    transition: 1s;
+}
+
+.formbox .login{
+  top: 100%;
+  transition-delay: 0.2s;
+ 
+}
+
+.slide .formbox .login{
+  top: 0%;
+  transition-delay: 0s;
+}
+
+.formbox .form.signupform{
+    top: 0%;
+  transition-delay: 0.2s;
+  }
+
+.slide .formbox .signupform{
+    top: -100%;
+    transition-delay: 0s;
+}  
+.document h1{
+    color: rgb(9, 9, 9);
+}
+
+.document {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1rem;
+
+}
+
+.document input {
+    width: 60%;
+    height: 20px;
+    padding: 1rem;
+}
+
+
+.slide .formbox .login+{
+    top: 0;
+}
+
+.formbox form input{
+    margin: 8px;
+    text-transform: uppercase;
+}
+
+.formbox form input[type="text"]{
+    width: 170px;
+    padding: 7px 3px;
+}
+
+.formbox form input[type="email"]{   
+    width: 365px;
+    padding: 7px 3px;
+}
+
+.formbox form input[type="password"]{
+    width: 365px;
+    padding: 7px 3px;
+    display: block;
+}
+.formbox form input[type="radio"]{
+    margin: 8px;
+}
+.formbox form input[type="date"]{
+    width: 365px;
+    padding: 7px 3px;
+    display: block;
+}
+.formbox form input[type="address"]{
+    width: 365px;
+    padding: 7px 3px;
+    display: block;
+}
+select{
+    padding: 7px 3px;
+    margin: 8px;
+    width: 365px;
+
+}
+
+textarea{
+    margin: 8px;
+    width: 365px;
+    padding: 7px 3px;
+    height: 80px;
+}
