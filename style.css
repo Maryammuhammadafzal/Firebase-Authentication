@@ -32,14 +32,14 @@
 
 }
 
-.signup {
+.signup , .login{
     width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 1em;
+    /* padding: 1rem; */
     z-index: 10;
     position: relative;
 }
@@ -105,7 +105,7 @@
     transition: 1s;
 }
 
-.formbox .login{
+.formbox .loginForm{
   top: 100%;
   transition-delay: 0.2s;
  
@@ -125,11 +125,11 @@
     top: -100%;
     transition-delay: 0s;
 }  
-.document h1{
+.loginForm h1{
     color: rgb(9, 9, 9);
 }
 
-.document {
+.loginForm {
     width: 50%;
     height: 100%;
     display: flex;
@@ -141,20 +141,22 @@
 
 }
 
-.document input {
+.loginForm input {
     width: 60%;
     height: 20px;
     padding: 1rem;
 }
 
 
-.slide .formbox .login+{
+.slide .formbox .login{
     top: 0;
 }
 
-.formbox form input{
-    margin: 8px;
+.formbox form input :not(input[type="email"]){
     text-transform: uppercase;
+}
+.formbox form input {
+    margin: 8px;
 }
 
 .formbox form input[type="text"]{
@@ -197,4 +199,9 @@ textarea{
     width: 365px;
     padding: 7px 3px;
     height: 80px;
+}
+
+.border-red{
+    border: 2px solid rgb(234, 71, 71);
+    background-color: aqua;
 }
