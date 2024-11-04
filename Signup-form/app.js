@@ -8,6 +8,7 @@ import { auth, createUserWithEmailAndPassword } from "../firebase.js";
 // Dom Elements
 let signupbtn = document.getElementById("signup-btn");
 let backtosignupbtn = document.querySelector(".back-btn");
+let loginBtn = document.getElementById('login')
 let body = document.querySelector(".body");
 
   // get all inputs from Dom
@@ -20,10 +21,23 @@ let body = document.querySelector(".body");
 
 
 
+const back = ()=> {
+    body.classList.remove('slide');
+}
+
+const login = () => {
+    body.classList.add("slide"); 
+}
+
+const signup = () => {
+    body.classList.add("slide");
+}
+
+// SignUp user
 const signupUser = ()=>{
 
-   if (email.value.trim() && password.value.trim()){
-     
+    
+    if (email.value.trim() && password.value.trim()){
     createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       // Signed up 
@@ -34,21 +48,23 @@ const signupUser = ()=>{
       // ...
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-      
-      // ..
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        
+        // ..
     });
-
-    }
-
- 
+    
+}
 
 }
 
-signupbtn && signupbtn.addEventListener('click' , signupUser);
 
+
+signupbtn && signupbtn.addEventListener('click' , signupUser);
+signupbtn && signupbtn.addEventListener('click' , signup);
+backtosignupbtn && backtosignupbtn.addEventListener('click' , back);
+loginBtn && loginBtn.addEventListener('click' , login);
 // // Event listener at signup button
 // signupbtn && signupbtn.addEventListener("click", () => {
 
