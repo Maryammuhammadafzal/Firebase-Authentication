@@ -49,7 +49,7 @@
     font-size: 1.5em;
 }
 
-.signup button , .login button{
+.signup button , .login button {
     padding:  10px 20px;
     margin: 15px;
     cursor: pointer;
@@ -147,8 +147,17 @@
     padding: 1rem;
 }
 
-
-.slide .formbox .login{
+.login-btn{
+    padding:  10px 20px;
+    margin: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    background-color: rgb(231, 72, 72);
+}
+.slide .formbox .loginForm{
     top: 0;
 }
 
