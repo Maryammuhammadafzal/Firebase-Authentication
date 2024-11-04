@@ -24,10 +24,11 @@ const signupUser = ()=>{
 
    if (email.value.trim() && password.value.trim()){
      
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       // Signed up 
-      const user = userCredential.user;  
+      const user = userCredential.user;
+      body.classList.add("slide"); 
       console.log(user);
       
       // ...
