@@ -211,6 +211,7 @@ textarea{
 }
 
 .border-red{
+<<<<<<< HEAD
     border: 1px solid rgb(234, 71, 71);
     background-color: rgb(252, 178, 178);
 }
@@ -271,3 +272,8 @@ textarea{
       opacity: 1;
     }
   }
+=======
+    border: 2px solid rgb(234, 71, 71);
+    background-color: aqua;
+}
+>>>>>>> a2cd1ff12fc3879ebcf41561d9fa7a5b56b11a8b

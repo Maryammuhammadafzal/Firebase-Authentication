@@ -8,7 +8,11 @@ import { auth, createUserWithEmailAndPassword, onAuthStateChanged } from "../fir
 //-------------------------- Get Dom Elements ---------------------------//
 let signupbtn = document.getElementById("signup-btn");
 let backtosignupbtn = document.querySelector(".back-btn");
+<<<<<<< HEAD
 let loginBtn = document.getElementById('login-btn')
+=======
+let loginBtn = document.getElementById('login')
+>>>>>>> a2cd1ff12fc3879ebcf41561d9fa7a5b56b11a8b
 let body = document.querySelector(".body");
 
   // get all inputs from Dom
@@ -42,11 +46,31 @@ const loader = ()=> {
     </div>`
 }
 
+<<<<<<< HEAD
 //--------------------------- SignUp user-----------------------------//
 const signupUser = ()=>{
 
    
     // if (email.value.trim() && password.value.trim()){
+=======
+const back = ()=> {
+    body.classList.remove('slide');
+}
+
+const login = () => {
+    body.classList.add("slide"); 
+}
+
+const signup = () => {
+    body.classList.add("slide");
+}
+
+// SignUp user
+const signupUser = ()=>{
+
+    
+    if (email.value.trim() && password.value.trim()){
+>>>>>>> a2cd1ff12fc3879ebcf41561d9fa7a5b56b11a8b
     createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       // Signed up 
@@ -78,6 +102,7 @@ const signupUser = ()=>{
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+<<<<<<< HEAD
 
         // Switch statements on error
         switch (errorCode) {
@@ -143,6 +168,25 @@ signupbtn && signupbtn.addEventListener('click' , signupUser);
 
 //If user is currently signed in
 const user = auth.currentUser;
+=======
+        console.log(errorMessage);
+        
+        // ..
+    });
+    
+}
+
+}
+
+
+
+signupbtn && signupbtn.addEventListener('click' , signupUser);
+signupbtn && signupbtn.addEventListener('click' , signup);
+backtosignupbtn && backtosignupbtn.addEventListener('click' , back);
+loginBtn && loginBtn.addEventListener('click' , login);
+// // Event listener at signup button
+// signupbtn && signupbtn.addEventListener("click", () => {
+>>>>>>> a2cd1ff12fc3879ebcf41561d9fa7a5b56b11a8b
 
 if (user) {
   console.log("User is signed in");
