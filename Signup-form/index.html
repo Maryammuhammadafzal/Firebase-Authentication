@@ -14,8 +14,8 @@
     <div class="container">
         <div class="login">
             <h1>Login Form</h1>
-            <button class="login-btn">Back to signup</button>
-      </div>
+            <button class="back-btn">Back to signup</button>
+        </div>
 
         <!-- signUp page -->
         <div class="signup">
@@ -34,21 +34,26 @@
             <input class="inputField" value="" type="radio" name="gender" id="genderfemale" >Female
             <input class="inputField" value="" type="date" name="date" id="birth-date">
             <input class="inputField" value="" type="address" name="address" id="address" placeholder="address">
-            <input class="inputField" type="checkbox" name="remember" id="remember">Remember me             
-            </form>
-
+            <p>If you have already an Account <a href=""><button id="login-btn">Login</button></a></p>            
+        </form>
+            
+            
+            
             <div class="loginForm form" >
                 <h1>LogIn</h1>
                 <input value="" type="email" name="email" id="loginEmail" placeholder="email">
                 <input value="" type="password" name="password" id="loginPassword" placeholder="password">
-                <button class="login">LogIn</button>
+                <button class="login-btn">LogIn</button>
+                <p id="forgot-password">Forgot password</p>
             </div>
-    
-
+            
     </div>
     </div>
     <script type="module" src="app.js"></script>
     <script type="module" src="../firebase.js"></script>
+    <script type="module" src="../Login-Form/login.js"></script>
+    <script type="module" src="../User-Profile/profile.js"></script>
+
 
     <!-- sweet alert library -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
