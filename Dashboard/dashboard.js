@@ -1,79 +1,58 @@
 
-import {auth , signOut, onAuthStateChanged } from "../firebase.js"
 
-// document.querySelector('.edit-btn').addEventListener('click', () => {
-//       alert('Edit profile feature coming soon!');
-//     });
-    
 
-let logoutBtn = document.getElementById("logout")
-
-const logout = ()  => {
-
-signOut(auth).then(() => {
-  
-  
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    },
-  });
-  Toast.fire({
-    icon: "success",
-    title: "log out successfully",
-  });
-
-}).catch((error) => {
-  console.log(errorrror);
-  
-});
-
+let userProfile = document.getElementById('userProfile');
+const showUserProfile = () => {
+  location.href = "../User-Profile/profile.html"
 }
+userProfile.addEventListener('click' , showUserProfile)
 
-logoutBtn.addEventListener('click' , logout);
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-let profileimage = document.getElementById("profile-img");
-let dropdownBox = document.getElementById('dropdown-box')
-const showProfileBox = ()=> {
-  
-  dropdownBox.style.display = "block"
-  dropdownBox.innerHTML = `
-  <ul>
-              <li type="button" id="id"> <i class="fa-duotone fa-solid fa-user"></i> User Name</li>
-              
-
-              <li type="button" id="user-profile">Profile</li>
-              <li type="button">Setting</li>
-              <li type="button">Privacy&Security</li>
-              <li type="button">Logout</li>
-            </ul>`
-
-            let userProfile = document.getElementById("user-profile");
-            let profilePage = ()=>{
-              window.location.href = "../User-Profile/profile.html"
-              console.log(userProfile);
-               
-            }
-            userProfile && userProfile.addEventListener('click' ,profilePage);
-}
-profileimage.addEventListener('click' , showProfileBox);
-
-
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    
-    window.location.href = "../Login-Form/login.html"
-
-    const uid = user.uid;
-    // ...
-  } else {
-    // User is signed out
-    // ...
+!(function () {
+  const e = document.documentElement
+  if (
+    (e.classList.remove('no-js'),
+    e.classList.add('js'),
+    document.body.classList.contains('has-animations'))
+  ) {
+    const e = (window.sr = ScrollReveal())
+    e.reveal('.hero-title, .hero-paragraph, .hero-cta', {
+      duration: 1e3,
+      distance: '40px',
+      easing: 'cubic-bezier(0.5, -0.01, 0, 1.005)',
+      origin: 'left',
+      interval: 150
+    }),
+      e.reveal('.hero-illustration', {
+        duration: 1e3,
+        distance: '40px',
+        easing: 'cubic-bezier(0.5, -0.01, 0, 1.005)',
+        origin: 'right',
+        interval: 150
+      }),
+      e.reveal('.feature', {
+        duration: 1e3,
+        distance: '40px',
+        easing: 'cubic-bezier(0.5, -0.01, 0, 1.005)',
+        interval: 100,
+        origin: 'bottom',
+        scale: 0.9,
+        viewFactor: 0.5
+      }),
+      document.querySelectorAll('.pricing-table').forEach(i => {
+        const t = [].slice.call(i.querySelectorAll('.pricing-table-header')),
+          a = [].slice.call(i.querySelectorAll('.pricing-table-features li')),
+          c = [].slice.call(i.querySelectorAll('.pricing-table-cta')),
+          r = t.concat(a).concat(c)
+        e.reveal(r, {
+          duration: 600,
+          distance: '20px',
+          easing: 'cubic-bezier(0.5, -0.01, 0, 1.005)',
+          interval: 100,
+          origin: 'bottom',
+          viewFactor: 0.5
+        })
+      })
   }
-});
+})()

@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.min.css">
+
 </head>
 <body>
    
@@ -14,16 +17,20 @@
             <h1>Register</h1>
             <form id="signupForm">
                 <label for="signupEmail">Email
-                    <input type="email" name="email" id="signupEmail">
+                    <input type="email" name="email" class="inputFeild" id="signupEmail">
                 </label>
                 <label for="signupPassword">Password
-                    <input type="password" name="password" id="signupPassword">
+                    <input type="password" name="password" class="inputFeild" id="signupPassword">
                 </label>
             </form>
             <div id="signupBtn">Signup</div>
         </div>
     </div>
     
-    
+    <script type="module" src="./app.js"></script>
+    <script type="module" src="../firebase.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
+
 </body>
 </html>
