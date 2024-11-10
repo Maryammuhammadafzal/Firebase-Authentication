@@ -1,16 +1,20 @@
 //--------------- Importing -----------------------------//
 import {auth , createUserWithEmailAndPassword } from "../firebase.js"
+import { db, collection, addDoc } from "../firestore.js"
 
 //--------------- Dom Inputs-----------------------------//
+let signupFullName = document.getElementById('signupFullName')
 let signupEmail = document.getElementById('signupEmail')
 let signupPassword = document.getElementById('signupPassword')
+let signupPhoneNo = document.getElementById('signupPhoneNo')
+let signupRollNo = document.getElementById('signupRollNo')
 
 //-----------------Signup Button ---------------------//
 let signupBtn = document.getElementById('signupBtn')
 
 
 //------------------signup Finction --------------------//
-let signup = () => {
+let signup = async() => {
 
 
       createUserWithEmailAndPassword(auth, signupEmail.value , signupPassword.value)
@@ -92,7 +96,24 @@ let signup = () => {
 
         });
 
+
+        ///---------------------Firestore work ----------------//
+
+try {
+  const docRef = await addDoc(collection(db, "users"), {
+    fullName: `${signupFullName.value}`,
+    phoneNo : signupPhoneNo.value,
+    rollNo : signupRollNo.value
+  });
+  console.log("Document written with ID: ", docRef.id);
+} catch (e) {
+  console.error("Error adding document: ", e);
+}
+
 }
     
 //---------------------Event Listener -----------------//
-signupBtn.addEventListener('click' , signup)
+signupBtn && signupBtn.addEventListener('click' , signup)
+
+
+

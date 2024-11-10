@@ -1,169 +1,127 @@
-
-// import {
-//   getAuth,
-//   onAuthStateChanged,
-//   sendEmailVerification,
-//   updateProfile,
-//   signOut,
-// } from "./firebase.js";
-
-//Dom elements
-let userName = document.getElementById('userName');
-let userEmail = document.getElementById('userEmail');
-let userPhone = document.getElementById('userPhone');
-let userVerify = document.getElementById('userVerify');
-let userAddress = document.getElementById('userAddress');
-
-// const user = auth.currentUser;
-// if (user !== null) {
-//   // The user object has basic properties such as display name, email, etc.
-//   const displayName = user.displayName;
-//   const email = user.email;
-//   const photoURL = user.photoURL;
-//   const emailVerified = user.emailVerified;
-
-//   // The user's ID, unique to the Firebase project. Do NOT use
-//   // this value to authenticate with your backend server, if
-//   // you have one. Use User.getToken() instead.
-//   const uid = user.uid;
-// }
-
-
 import {
-  getAuth,
+  auth,
   onAuthStateChanged,
   sendEmailVerification,
   updateProfile,
-  signOut,
-} from "./firebase.js";
+  signOut
+} from '../firebase.js'
 
-const auth = getAuth();
-let profilePage = document.getElementById("profile-page");
+// DOM elements ka reference
+const userName = document.getElementById('userName');
+const userEmail = document.getElementById('userEmail');
+const userPhone = document.getElementById('userPhone');
+const userVerify = document.getElementById('userVerify');
+const userAddress = document.getElementById('userAddress');
+const userFullName = document.getElementById('userFullName');
 
-onAuthStateChanged(auth, (user) => {
+
+// Firebase Auth state change listener
+onAuthStateChanged(auth, user => {
   if (user) {
+    // User logged in
     const uid = user.uid;
     console.log(user);
 
-    profilePage.innerHTML = `<div class="card mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Full Name</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">${user.displayName}</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">
-                  Profile pic
-                  <img src="${user.photoURL}"   width="75px" /> 
-                  </p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">${user.email}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Phone</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">(097) 234-5678</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Mobile</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">(098) 765-4321</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                </div>
-                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">${
-                    user.emailVerified ? "yes" : "no"
-                  }</p>
-                </div>
-              </div>
-            </div>
-
-            
-<button type="button" class="btn btn-success" id="verifyEmail">Verify your email</button>
-          </div>
-          <button type="button" class="btn btn-success" id="updateProfile">Update profile</button>
-           <button type="button" class="btn btn-success" id="signOut">Sign Out</button>
-          </div>`;
-
-    //   verifyEmail
-    document.getElementById("verifyEmail").addEventListener("click", () => {
-      sendEmailVerification(auth.currentUser).then(() => {
-          //Succesfully signed in
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            },
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Email Has Been Sent",
-          });
-
-      });
-    });
-
-    //   update profile
-
-    document.getElementById("updateProfile").addEventListener("click", () => {
-      updateProfile(auth.currentUser, {
-        displayName: "Saylani",
-        photoURL:
-          "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-female-icon.png",
-      })
-        .then(() => {
-          console.log("update");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-
-
-    // sigh out 
-  let logoutBtn = document.getElementById("logoutBtn").addEventListener("click", () => {
-        signOut(auth).then(() => {
-            console.log("user has been signed out");
-
-            
-          }).catch((error) => {
-            console.log(error);
-            
-          });
-      });
-
+    // DOM elements ko update karna
+    userEmail.innerText = user.email ? user.email : 'No Email';
+    userPhone.innerText = user.phoneNumber ? user.phoneNumber : 'No Phone Number';  // phone.value ka use mat karo, agar phone number firebase se aa raha ho toh
+    userVerify.innerText = user.emailVerified ? 'Yes' : 'No'; 
+    userAddress.innerText = user.address ? user.address : 'No Address'; // Agar address hai toh use karen, warna 'No Address'
+    userFullName.innerText = user.displayName ? user.displayName : 'No Full Name';
   } else {
-    console.log("user is logout out");
+    // User logged out
+    location.href = "../Login-form/login.html";
+    console.log('User is logged out');
+    // Yahan aap kuch action le sakte hain jaise user ko login page par redirect karna
   }
 });
+
+ //   verifyEmail
+ document.getElementById('verifyEmail').addEventListener('click', () => {
+  sendEmailVerification(auth.currentUser).then(() => {
+    //Succesfully signed in
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: toast => {
+        toast.onmouseenter = Swal.stopTimer
+        toast.onmouseleave = Swal.resumeTimer
+      }
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Email Has Been Sent'
+    })
+  })
+})
+
+ //   update profile
+
+ document.getElementById('updateBtn').addEventListener('click', () => {
+   
+   Swal.fire({
+          title: 'PopOutTitle',
+          text: 'Your Name:',
+          input: 'text', // 'input' in SweetAlert2
+          showCancelButton: true,
+          inputValue: userName.innerText, // Default value for input field
+          inputPlaceholder: 'Enter your name',
+          animation: 'slide-from-top'
+        }).then((result) => {
+          if (result.isDismissed) return; // If the user pressed 'Cancel'
+          if (result.value === '') {
+            Swal.showValidationMessage('You need to write something!');
+            return false;
+          }
+          let userName = document.getElementById('userName')
+          userName.innerText = result.value || 'Unknown';
+          
+          updateProfile(auth.currentUser, {
+
+            displayName: `${userName.innerText}`
+    })
+      .then(() => {
+        console.log('update')
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  })
+  
+        });
+
+// document.getElementById("profileImg").addEventListener("click" , async()=>{
+//   const { value: url } = await Swal.fire({
+//     input: "url",
+//     inputLabel: "URL address",
+//     inputPlaceholder: "Enter the URL"
+//   });
+ 
+
+// updateProfile(auth.currentUser, {
+
+//           photoURL: `${url}`
+//   })
+//     .then(() => {
+//       console.log('update')
+//     })
+//     .catch(error => {
+//       console.log(error)
+//     })
+// })
+
+    // sigh out
+    let logoutBtn = document
+      .getElementById('logoutBtn')
+      .addEventListener('click', () => {
+        signOut(auth)
+          .then(() => {
+            console.log('user has been signed out')
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })

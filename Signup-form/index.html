@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./style.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
 
 </head>
 <body>
@@ -16,11 +17,20 @@
         <div id="signupFormBox">
             <h1>Register</h1>
             <form id="signupForm">
+                <label for="signupFullName">Full Name
+                    <input type="text" name="text" class="inputFeild" id="signupFullName">
+                </label>
                 <label for="signupEmail">Email
                     <input type="email" name="email" class="inputFeild" id="signupEmail">
                 </label>
                 <label for="signupPassword">Password
                     <input type="password" name="password" class="inputFeild" id="signupPassword">
+                </label>
+                <label for="signupPhoneNo">Phone no
+                    <input type="number" name="number" class="inputFeild" id="signupPhoneNo">
+                </label>
+                <label for="signupRollNo">Roll no
+                    <input type="number" name="number" class="inputFeild" id="signupRollNo">
                 </label>
             </form>
             <div id="signupBtn">Signup</div>
@@ -29,8 +39,8 @@
     
     <script type="module" src="./app.js"></script>
     <script type="module" src="../firebase.js"></script>
+    <script type="module" src="../firestore.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.4/dist/sweetalert2.all.min.js"></script>
 
 </body>
 </html>
