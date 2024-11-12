@@ -1,13 +1,16 @@
 //--------------- Importing -----------------------------//
-import {auth , createUserWithEmailAndPassword } from "../firebase.js"
-import { db, collection, addDoc } from "../firestore.js"
+import {auth , createUserWithEmailAndPassword, deleteDoc, deleteField ,db, collection, addDoc, getDocs, doc, setDoc, Timestamp} from "../firebase.js"
+
 
 //--------------- Dom Inputs-----------------------------//
 let signupFullName = document.getElementById('signupFullName')
 let signupEmail = document.getElementById('signupEmail')
 let signupPassword = document.getElementById('signupPassword')
 let signupPhoneNo = document.getElementById('signupPhoneNo')
-let signupRollNo = document.getElementById('signupRollNo')
+let signupAddress = document.getElementById('signupAddress')
+let signupGender = document.getElementsByName("gender");
+
+
 
 //-----------------Signup Button ---------------------//
 let signupBtn = document.getElementById('signupBtn')
@@ -99,19 +102,87 @@ let signup = async() => {
 
         ///---------------------Firestore work ----------------//
 
+        //Add data
 try {
   const docRef = await addDoc(collection(db, "users"), {
     fullName: `${signupFullName.value}`,
     phoneNo : signupPhoneNo.value,
-    rollNo : signupRollNo.value
+    address : signupAddress.value
   });
   console.log("Document written with ID: ", docRef.id);
 } catch (e) {
   console.error("Error adding document: ", e);
 }
 
+//Read data
+try {
+  const querySnapshot = await getDocs(collection(db, "users"));
+querySnapshot.forEach((doc) => {
+  console.log(`${doc.id} => ${doc.data()}`);
+});
+} catch (e) {
+  console.error("Error getting document: ", e);
 }
-    
+
+//Set data
+try {
+  await setDoc(doc(db, "user", doc.id), {
+   genderCondition : `${signupGender[0].isChecked ? "Male" : "Female"}`
+  });
+  
+} catch (e) {
+  console.error("Error setting document: ", e);
+}
+
+
+//Set data
+try {
+  const docData = {
+    stringExample: "Hello world!",
+    booleanExample: true,
+    numberExample: 3.14159265,
+    dateExample: Timestamp.fromDate(new Date()),
+    arrayExample: [5, true, "hello"],
+    nullExample: null,
+    objectExample: {
+        a: 5,
+        b: {
+            nested: "foo"
+        }
+    }
+};
+await setDoc(doc(db, "user", doc.id), docData);
+  
+} catch (e) {
+  console.error("Error setting document: ", e);
+}
+
+//Delete Data
+try {
+  await deleteDoc(doc(db, "cities", "DC"));
+  
+} catch (e) {
+  console.error("Error setting document: ", e);
+}
+
+//Delete Data feild
+const docRef = doc(db, 'user', doc.id);
+
+try {
+
+// Remove the 'capital' field from the document
+await updateDoc(docRef, {
+  fullName: deleteField()
+});
+  
+} catch (e) {
+  console.error("Error setting document: ", e);
+}
+
+
+}
+
+
 //---------------------Event Listener -----------------//
 signupBtn && signupBtn.addEventListener('click' , signup)
 

@@ -13,6 +13,17 @@ sendEmailVerification,
 updateProfile,
 GoogleAuthProvider,
 signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {
+   getFirestore,
+   collection,
+   addDoc,
+   getDocs,
+   doc,
+   setDoc,
+   Timestamp,
+   deleteDoc,
+   deleteField 
+ } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js'
 
 
 
@@ -31,6 +42,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
+const db = getFirestore(app)
+export {  }
 
 
 
@@ -44,5 +57,13 @@ sendEmailVerification,
 updateProfile,
 provider,
 signInWithPopup,
-
+db,
+collection,
+addDoc,
+getDocs,
+doc,
+setDoc,
+Timestamp,
+deleteDoc,
+deleteField 
  } 

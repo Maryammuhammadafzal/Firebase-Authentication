@@ -26,11 +26,18 @@
                 <label for="signupPassword">Password
                     <input type="password" name="password" class="inputFeild" id="signupPassword">
                 </label>
-                <label for="signupPhoneNo">Phone no
-                    <input type="number" name="number" class="inputFeild" id="signupPhoneNo">
+                <label for="signupMale">Male
+                    <input type="radio" name="gender" class="inputFeild" id="signupMale">
                 </label>
-                <label for="signupRollNo">Roll no
-                    <input type="number" name="number" class="inputFeild" id="signupRollNo">
+                <label for="signupFemale">Female
+                    <input type="radio" name="gender" class="inputFeild" id="signupFemale">
+                </label>
+                
+                <label for="signupPhoneNo">Phone no
+                    <input type="number" name="phone-number" class="inputFeild" id="signupPhoneNo">
+                </label>
+                <label for="signupAddress">Address
+                    <input type="text" name="text" class="inputFeild" id="signupAddress">
                 </label>
             </form>
             <div id="signupBtn">Signup</div>
@@ -39,7 +46,6 @@
     
     <script type="module" src="./app.js"></script>
     <script type="module" src="../firebase.js"></script>
-    <script type="module" src="../firestore.js"></script>
 
 
 </body>
