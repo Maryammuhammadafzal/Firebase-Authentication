@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Index</title>
+      <style>
+            #container{
+                  width: 100%;
+                  height: 100vh;
+                  box-sizing: border-box;
+                  background-color: rgb(118, 172, 247);
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: whitesmoke;
+            }
+      </style>
+</head>
+<body>
+      <div id="container"></div>
+      
+      <script>
+            let container = document.getElementById('container');
+            setTimeout(()=>{
+               container.innerHTML = `<h1>My Post App</h1>`
+            }, 2000)
+            window.location.href = './Signup-form/index.html'
+      </script>
+      
+</body>
+</html>
