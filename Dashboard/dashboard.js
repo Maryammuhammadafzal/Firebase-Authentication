@@ -1,11 +1,17 @@
 
 
-
+// redirect to user profile page
 let userProfile = document.getElementById('userProfile');
 const showUserProfile = () => {
   location.href = "../User-Profile/profile.html"
 }
 userProfile.addEventListener('click' , showUserProfile)
+// redirect to user post page
+let userPosts = document.getElementById('userPosts');
+const showUserPosts = () => {
+  location.href = "../Posts/post.html"
+}
+userPosts.addEventListener('click' , showUserPosts)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
