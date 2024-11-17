@@ -46,7 +46,7 @@ let signup = async() => {
           // page redirection
         setTimeout (()=>{
           location.href = "../Login-form/login.html"
-        },3000)
+        },500)
 
         })
         .catch((error) => {
@@ -107,7 +107,9 @@ try {
   const docRef = await addDoc(collection(db, "users"), {
     fullName: `${signupFullName.value}`,
     phoneNo : signupPhoneNo.value,
-    address : signupAddress.value
+    address : signupAddress.value,
+    genderCondition : `${signupGender[0].isChecked ? "Male" : "Female"}`,
+    dateExample: Timestamp.fromDate(new Date())
   });
   console.log("Document written with ID: ", docRef.id);
 } catch (e) {
@@ -115,69 +117,69 @@ try {
 }
 
 //Read data
-try {
-  const querySnapshot = await getDocs(collection(db, "users"));
-querySnapshot.forEach((doc) => {
-  console.log(`${doc.id} => ${doc.data()}`);
-});
-} catch (e) {
-  console.error("Error getting document: ", e);
-}
+// try {
+  // const querySnapshot = await getDocs(collection(db, "users"));
+// querySnapshot.forEach((doc) => {
+//   console.log(`${doc.id} => ${doc.data()}`);
+// });
+// } catch (e) {
+//   console.error("Error getting document: ", e);
+// }
 
-//Set data
-try {
-  await setDoc(doc(db, "user", doc.id), {
-   genderCondition : `${signupGender[0].isChecked ? "Male" : "Female"}`
-  });
+// //Set data
+// try {
+//   await setDoc(doc(db, "user", doc.id), {
+   
+//   });
   
-} catch (e) {
-  console.error("Error setting document: ", e);
-}
+// } catch (e) {
+//   console.error("Error setting document: ", e);
+// }
 
 
-//Set data
-try {
-  const docData = {
-    stringExample: "Hello world!",
-    booleanExample: true,
-    numberExample: 3.14159265,
-    dateExample: Timestamp.fromDate(new Date()),
-    arrayExample: [5, true, "hello"],
-    nullExample: null,
-    objectExample: {
-        a: 5,
-        b: {
-            nested: "foo"
-        }
-    }
-};
-await setDoc(doc(db, "user", doc.id), docData);
+// //Set data
+// try {
+//   const docData = {
+//     stringExample: "Hello world!",
+//     booleanExample: true,
+//     numberExample: 3.14159265,
+//     dateExample: Timestamp.fromDate(new Date()),
+//     arrayExample: [5, true, "hello"],
+//     nullExample: null,
+//     objectExample: {
+//         a: 5,
+//         b: {
+//             nested: "foo"
+//         }
+//     }
+// };
+// await setDoc(doc(db, "user", doc.id), docData);
   
-} catch (e) {
-  console.error("Error setting document: ", e);
-}
+// } catch (e) {
+//   console.error("Error setting document: ", e);
+// }
 
-//Delete Data
-try {
-  await deleteDoc(doc(db, "cities", "DC"));
+// //Delete Data
+// try {
+//   await deleteDoc(doc(db, "cities", "DC"));
   
-} catch (e) {
-  console.error("Error setting document: ", e);
-}
+// } catch (e) {
+//   console.error("Error setting document: ", e);
+// }
 
-//Delete Data feild
-const docRef = doc(db, 'user', doc.id);
+// //Delete Data feild
+// const docRef = doc(db, 'user', doc.id);
 
-try {
+// try {
 
-// Remove the 'capital' field from the document
-await updateDoc(docRef, {
-  fullName: deleteField()
-});
+// // Remove the 'capital' field from the document
+// await updateDoc(docRef, {
+//   fullName: deleteField()
+// });
   
-} catch (e) {
-  console.error("Error setting document: ", e);
-}
+// } catch (e) {
+//   console.error("Error setting document: ", e);
+// }
 
 
 }

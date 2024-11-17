@@ -3,7 +3,16 @@ import {
   onAuthStateChanged,
   sendEmailVerification,
   updateProfile,
-  signOut
+  signOut,
+  db,
+collection,
+addDoc,
+getDocs,
+doc,
+setDoc,
+Timestamp,
+deleteDoc,
+deleteField 
 } from '../firebase.js'
 
 // DOM elements ka reference
@@ -16,11 +25,11 @@ const userFullName = document.getElementById('userFullName');
 
 
 // Firebase Auth state change listener
-onAuthStateChanged(auth, user => {
+ onAuthStateChanged(auth, user => {
   if (user) {
     // User logged in
     const uid = user.uid;
-    console.log(user);
+    console.log(uid);
 
     // DOM elements ko update karna
     userEmail.innerText = user.email ? user.email : 'No Email';
@@ -28,6 +37,26 @@ onAuthStateChanged(auth, user => {
     userVerify.innerText = user.emailVerified ? 'Yes' : 'No'; 
     userAddress.innerText = user.address ? user.address : 'No Address'; // Agar address hai toh use karen, warna 'No Address'
     userFullName.innerText = user.displayName ? user.displayName : 'No Full Name';
+  
+    let getUserDetails = async()=>{
+
+      // ------------Firestore--------------------//
+      //Read data
+try {
+  const querySnapshot = await getDocs(collection(db, "users" ));
+querySnapshot.forEach((doc) => {
+  console.log(doc.id);
+  
+  console.log(`${doc.id} => ${doc.data()}`);
+});
+} catch (e) {
+  console.error("Error getting document: ", e);
+}
+
+    }
+
+    getUserDetails()
+  
   } else {
     // User logged out
     location.href = "../Login-form/login.html";
@@ -37,7 +66,7 @@ onAuthStateChanged(auth, user => {
 });
 
  //   verifyEmail
- document.getElementById('verifyEmail').addEventListener('click', () => {
+ document.getElementById('verifyEmail').addEventListener('click', async() => {
   sendEmailVerification(auth.currentUser).then(() => {
     //Succesfully signed in
     const Toast = Swal.mixin({
@@ -56,6 +85,9 @@ onAuthStateChanged(auth, user => {
       title: 'Email Has Been Sent'
     })
   })
+
+
+
 })
 
  //   update profile

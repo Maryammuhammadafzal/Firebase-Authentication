@@ -45,10 +45,12 @@ let login = () => {
             title: "Login successfully",
           });
 
-          // page redirection
+        if(loginEmail.value,loginPassword.value){
+            // page redirection
         setTimeout (()=>{
           location.href = "../Dashboard/dashboard.html"
-        },2000)
+        },500)
+        }
 
   })
   .catch((error) => {
@@ -141,16 +143,4 @@ let googleSignIn = ()=> {
   signupLink.addEventListener('click'  , gotoSinupPage)
   googleBtn.addEventListener('click'  , googleSignIn)
 
-// If user is already login so change the state
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid = user.uid;
-
-    console.log(uid);
-    setTimeout (()=>{
-      location.href = "../Dashboard/dashboard.html"
-    },3000)
-    
-  } 
-});
+ 

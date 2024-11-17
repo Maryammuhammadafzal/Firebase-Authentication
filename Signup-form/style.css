@@ -36,10 +36,10 @@
 
 #signupForm label {
     display: block;
-    padding: .2rem;
-    width: 80%;
+    width: 100%;
+    padding: 0 1rem;
 }
-#signupForm input {
+#signupForm input :not(type="radio"){
     display: block;
     padding: .2rem;
     width: 100%;
