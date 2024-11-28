@@ -5,127 +5,162 @@ import {
   updateProfile,
   signOut,
   db,
-  onSnapshot ,
-collection,
-addDoc,
-getDocs,
-doc,
-setDoc,
-Timestamp,
-deleteDoc,
-deleteField 
-} from '../firebase.js'
+  onSnapshot,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  Timestamp,
+  deleteDoc,
+  deleteField,
+  query,
+  where,
+} from "../firebase.js";
 
+let uid = localStorage.getItem("uid");
+let data;
 // DOM elements ka reference
-const userName = document.getElementById('userName');
-const userEmail = document.getElementById('userEmail');
-const userPhone = document.getElementById('userPhone');
-const userVerify = document.getElementById('userVerify');
-const userAddress = document.getElementById('userAddress');
-const userFullName = document.getElementById('userFullName');
+const userName = document.getElementById("userName");
+const userEmail = document.getElementById("userEmail");
+const userPhone = document.getElementById("userPhone");
+const userVerify = document.getElementById("userVerify");
+const userAddress = document.getElementById("userAddress");
+const userFullName = document.getElementById("userFullName");
+const userDis = document.getElementById("userDis");
+console.log(userFullName);
 
 // contact link
-let instagramLink = document.getElementById('instagramLink');
-let facebookLink = document.getElementById('facebookLink');
-let twitterLink = document.getElementById('twitterLink');
+let instagramLink = document.getElementById("instagramLink");
+let facebookLink = document.getElementById("facebookLink");
+let twitterLink = document.getElementById("twitterLink");
 
-const user = auth.currentUser;
+// ------------Firestore--------------------//
+//Read data
+const getUserByUIDField = async () => {
+  try {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
 
-if (user) {
-  const uid = user.uid;
-  let getUserDetails = async()=>{
-
-    // ------------Firestore--------------------//
-    //Read data
-try {
-  const unsub = onSnapshot(doc(db, "user", uid), (doc) => {
-    console.log("Current data: ", doc.data());
-  });
-} catch (e) {
-console.error("Error getting document: ", e);
-}
-
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      data = docSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
   }
-  getUserDetails()
 
-}
-//  else {
-//   location.href = "../Login-form/login.html";
-//   console.log('User is logged out');
-// }
-
+  localStorage.setItem('email' , data.email);
+  localStorage.setItem('phone' , data.phone)
+  localStorage.setItem('address' , data.address)
+  localStorage.setItem('fullName' , data.fullName)
+  localStorage.setItem('userName' , data.fullName)
 
 
-    // // DOM elements ko update karna
-    // userEmail.innerText = user.email ? user.email : 'No Email';
-    // userPhone.innerText = user.phoneNumber ? user.phoneNumber : 'No Phone Number';  // phone.value ka use mat karo, agar phone number firebase se aa raha ho toh
-    // userVerify.innerText = user.emailVerified ? 'Yes' : 'No'; 
-    // userAddress.innerText = user.address ? user.address : 'No Address'; // Agar address hai toh use karen, warna 'No Address'
-    // userFullName.innerText = user.displayName ? user.displayName : 'No Full Name';
-  
 
-  
+  // Update DOM elements
+  userEmail.innerText = data.email;
+  userPhone.innerText = data.phoneNo;
+  userAddress.innerText = data.address;
+  userFullName.innerText = data.fullName;
+  userName.innerText = data.fullName;
+};
+getUserByUIDField();
 
-
- //   verifyEmail
- document.getElementById('verifyEmail').addEventListener('click', async() => {
+//   verifyEmail
+document.getElementById("verifyEmail").addEventListener("click", async () => {
   sendEmailVerification(auth.currentUser).then(() => {
     //Succesfully signed in
     const Toast = Swal.mixin({
       toast: true,
-      position: 'top-end',
+      position: "top-end",
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
-      didOpen: toast => {
-        toast.onmouseenter = Swal.stopTimer
-        toast.onmouseleave = Swal.resumeTimer
-      }
-    })
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
     Toast.fire({
-      icon: 'success',
-      title: 'Email Has Been Sent'
-    })
-  })
+      icon: "success",
+      title: "Email Has Been Sent",
+    });
+  });
+});
 
+//   update profile
 
+document.getElementById("updateBtn").addEventListener("click", async() => {
+  // Swal.fire({
 
-})
+  //   title: "PopOutTitle"
+  //   [{
 
- //   update profile
+  //     text: "Your Name:",
+  //     input: "text", 
+  //     inputValue: userName.innerText, 
+  //     inputPlaceholder: "Enter your name",
+      
+  //   },
+  //   {
 
- document.getElementById('updateBtn').addEventListener('click', () => {
-   
-   Swal.fire({
-          title: 'PopOutTitle',
-          text: 'Your Name:',
-          input: 'text', // 'input' in SweetAlert2
-          showCancelButton: true,
-          inputValue: userName.innerText, // Default value for input field
-          inputPlaceholder: 'Enter your name',
-          animation: 'slide-from-top'
-        }).then((result) => {
-          if (result.isDismissed) return; // If the user pressed 'Cancel'
-          if (result.value === '') {
-            Swal.showValidationMessage('You need to write something!');
-            return false;
-          }
-          let userName = document.getElementById('userName')
-          userName.innerText = result.value || 'Unknown';
-          
-          updateProfile(auth.currentUser, {
+  //     text: "Your Name:",
+  //     input: "text", 
+  //     inputValue: userName.innerText, 
+  //     inputPlaceholder: "Enter your name",
+      
+  //   },
+  //    {showCancelButton: true}
 
-            displayName: `${userName.innerText}`
-    })
-      .then(() => {
-        console.log('update')
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  })
-  
-        });
+  // ]
+  // })
+  // .then((result) => {
+  //   if (result.isDismissed) return; 
+  //   if (result.value === "") {
+  //     Swal.showValidationMessage("You need to write something!");
+  //     return false;
+  //   }
+//     let userName = document.getElementById("userName");
+//     userName.innerText = result.value || "Unknown";
+
+//     updateProfile(auth.currentUser, {
+//       displayName: `${userName.innerText}`,
+//     })
+//       .then(() => {
+//         console.log("update");
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   });
+let updatedName;
+let updatedDis;
+const { value: formValues } = await Swal.fire({
+  title: "Update profile",
+  html: `
+    <input id="swal-input1" class="swal2-input" placeholder="${userName.innerText}" >
+    <input id="swal-input2" class="swal2-input" placeholder="${userDis.innerText}">
+  `,
+  focusConfirm: false,
+  preConfirm: () => {
+    return [
+      updatedName = localStorage.setItem("userName" , document.getElementById("swal-input1").value) ,
+      updatedDis = localStorage.setItem("updatedDis" , document.getElementById("swal-input2").value) ,
+      
+    ];
+  }
+});
+if (formValues) {
+  Swal.fire(JSON.stringify(formValues));
+  userName.innerText = localStorage.getItem("updatedName") ; 
+  userDis.innerText = localStorage.getItem("updatedDis"); 
+}
+
+});
 
 // document.getElementById("profileImg").addEventListener("click" , async()=>{
 //   const { value: url } = await Swal.fire({
@@ -133,7 +168,6 @@ console.error("Error getting document: ", e);
 //     inputLabel: "URL address",
 //     inputPlaceholder: "Enter the URL"
 //   });
- 
 
 // updateProfile(auth.currentUser, {
 
@@ -147,15 +181,15 @@ console.error("Error getting document: ", e);
 //     })
 // })
 
-    // sigh out
-    let logoutBtn = document
-      .getElementById('logoutBtn')
-      .addEventListener('click', () => {
-        signOut(auth)
-          .then(() => {
-            console.log('user has been signed out')
-          })
-          .catch(error => {
-            console.log(error)
-          })
+// sigh out
+let logoutBtn = document
+  .getElementById("logoutBtn")
+  .addEventListener("click", () => {
+    signOut(auth)
+      .then(() => {
+        console.log("user has been signed out");
       })
+      .catch((error) => {
+        console.log(error);
+      });
+  });

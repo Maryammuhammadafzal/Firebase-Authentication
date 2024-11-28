@@ -23,7 +23,10 @@ import {
    Timestamp,
    deleteDoc,
    deleteField ,
-   onSnapshot 
+   onSnapshot ,
+   getDoc,
+   query,
+   where
  } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js'
 
 
@@ -68,5 +71,8 @@ Timestamp,
 deleteDoc,
 deleteField,
 GoogleAuthProvider,
-onSnapshot 
+onSnapshot ,
+getDoc,
+query,
+where
  } 
