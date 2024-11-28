@@ -22,6 +22,7 @@
     flex-direction: column;
     gap: 2rem;
     padding: 1rem;
+    justify-content: center;
     font-family: 'Courier New', Courier, monospace;
 }
 
@@ -30,22 +31,27 @@
     min-height: 130px;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: 1rem;
 }
 
 #signupForm label {
+    width: 80%;
     display: block;
-    width: 100%;
     padding: 0 1rem;
 }
-#signupForm input :not(type="radio"){
-    display: block;
+#signupForm .inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: .2rem;
     width: 100%;
-    margin-top: .5rem;
     border: none;
     outline: none;
+}
+.inputs input{
+    width: 100%;
 }
 
 #signupBtn{
@@ -57,4 +63,8 @@
     text-align: center;
     cursor: default;
 }
-
+.genders{
+    display: flex;
+    width: 45%
+    
+}

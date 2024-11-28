@@ -5,27 +5,55 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Index</title>
       <style>
+            *{
+                  padding: 0;
+                  margin: 0;
+                  box-sizing: border-box;
+            }
             #container{
                   width: 100%;
                   height: 100vh;
                   box-sizing: border-box;
-                  background-color: rgb(118, 172, 247);
+                  background-color: skyblue;
                   display: flex;
+                  flex-direction: column;
                   justify-content: center;
+                  gap: 2rem;
                   align-items: center;
-                  color: whitesmoke;
+                  color: rgb(29, 28, 28);
+                  font-family: 'Courier New', Courier, monospace;
+            }
+            h1{
+                  font-size: 2.5rem;
+            }
+            #started {
+                  width: 20%;
+                  height: 50px;
+                  border-radius: 2rem;
+                  border: 3px solid rgb(0, 0, 0);
+                  outline: none;
+                  background-color: rgb(240, 239, 236);
+                  font-size: 1.2rem;
+                  font-family: 'Courier New', Courier, monospace;
+                  font-weight: 700;
+                  cursor: pointer;
             }
       </style>
 </head>
 <body>
-      <div id="container"></div>
+      <div id="container">
+            <h1>My Post App</h1>
+            <button id="started" > Get Started </button>
+      </div>
       
       <script>
             let container = document.getElementById('container');
+            let started = document.getElementById('started');
+            started && started.addEventListener('click', function(){
             setTimeout(()=>{
-               container.innerHTML = `<h1>My Post App</h1>`
-            }, 10000)
-            window.location.href = './Signup-form/signup.html'
+               window.location.href = "./Login-form/login.html"
+            }, 1000)
+      })
       </script>
       
 </body>

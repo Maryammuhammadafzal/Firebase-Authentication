@@ -3,15 +3,27 @@
 // redirect to user profile page
 let userProfile = document.getElementById('userProfile');
 const showUserProfile = () => {
-  location.href = "../User-Profile/profile.html"
+  window.location.href = "../User-Profile/profile.html"
 }
 userProfile.addEventListener('click' , showUserProfile)
 // redirect to user post page
 let userPosts = document.getElementById('userPosts');
 const showUserPosts = () => {
-  location.href = "../Posts/post.html"
+  window.location.href = "../Posts/post.html"
 }
 userPosts.addEventListener('click' , showUserPosts)
+// redirect to user login page
+let signinButton = document.getElementById('signinButton');
+const showsigninpage = () => {
+  window.location.href = "../Login-form/login.html"
+}
+signinButton.addEventListener('click' , showsigninpage)
+// redirect to user login page
+let signupButton = document.getElementById('signupButton');
+const showsignuppage = () => {
+  window.location.href = "../Signup-form/signup.html"
+}
+signupButton.addEventListener('click' , showsignuppage)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -5,6 +5,7 @@ import {
   updateProfile,
   signOut,
   db,
+  onSnapshot ,
 collection,
 addDoc,
 getDocs,
@@ -23,47 +24,48 @@ const userVerify = document.getElementById('userVerify');
 const userAddress = document.getElementById('userAddress');
 const userFullName = document.getElementById('userFullName');
 
+// contact link
+let instagramLink = document.getElementById('instagramLink');
+let facebookLink = document.getElementById('facebookLink');
+let twitterLink = document.getElementById('twitterLink');
 
-// Firebase Auth state change listener
- onAuthStateChanged(auth, user => {
-  if (user) {
-    // User logged in
-    const uid = user.uid;
-    console.log(uid);
+const user = auth.currentUser;
 
-    // DOM elements ko update karna
-    userEmail.innerText = user.email ? user.email : 'No Email';
-    userPhone.innerText = user.phoneNumber ? user.phoneNumber : 'No Phone Number';  // phone.value ka use mat karo, agar phone number firebase se aa raha ho toh
-    userVerify.innerText = user.emailVerified ? 'Yes' : 'No'; 
-    userAddress.innerText = user.address ? user.address : 'No Address'; // Agar address hai toh use karen, warna 'No Address'
-    userFullName.innerText = user.displayName ? user.displayName : 'No Full Name';
-  
-    let getUserDetails = async()=>{
+if (user) {
+  const uid = user.uid;
+  let getUserDetails = async()=>{
 
-      // ------------Firestore--------------------//
-      //Read data
+    // ------------Firestore--------------------//
+    //Read data
 try {
-  const querySnapshot = await getDocs(collection(db, "users" ));
-querySnapshot.forEach((doc) => {
-  console.log(doc.id);
-  
-  console.log(`${doc.id} => ${doc.data()}`);
-});
+  const unsub = onSnapshot(doc(db, "user", uid), (doc) => {
+    console.log("Current data: ", doc.data());
+  });
 } catch (e) {
-  console.error("Error getting document: ", e);
+console.error("Error getting document: ", e);
 }
 
-    }
-
-    getUserDetails()
-  
-  } else {
-    // User logged out
-    location.href = "../Login-form/login.html";
-    console.log('User is logged out');
-    // Yahan aap kuch action le sakte hain jaise user ko login page par redirect karna
   }
-});
+  getUserDetails()
+
+}
+//  else {
+//   location.href = "../Login-form/login.html";
+//   console.log('User is logged out');
+// }
+
+
+
+    // // DOM elements ko update karna
+    // userEmail.innerText = user.email ? user.email : 'No Email';
+    // userPhone.innerText = user.phoneNumber ? user.phoneNumber : 'No Phone Number';  // phone.value ka use mat karo, agar phone number firebase se aa raha ho toh
+    // userVerify.innerText = user.emailVerified ? 'Yes' : 'No'; 
+    // userAddress.innerText = user.address ? user.address : 'No Address'; // Agar address hai toh use karen, warna 'No Address'
+    // userFullName.innerText = user.displayName ? user.displayName : 'No Full Name';
+  
+
+  
+
 
  //   verifyEmail
  document.getElementById('verifyEmail').addEventListener('click', async() => {

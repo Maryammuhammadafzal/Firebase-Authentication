@@ -4,7 +4,8 @@ import {auth,
 signInWithEmailAndPassword, 
 onAuthStateChanged,
 provider,
-signInWithPopup } from "../firebase.js"
+signInWithPopup,
+GoogleAuthProvider } from "../firebase.js"
 
 //--------------- Dom Inputs-----------------------------//
 let loginEmail = document.getElementById('loginEmail')
@@ -16,7 +17,7 @@ let googleBtn = document.getElementById('googleBtn')
 
 //------------------GO To Sinup page Finction --------------------//
 let gotoSinupPage = () => {
-  location.href = '../Signup-form/index.html'
+  location.href = '../Signup-form/signup.html'
 }
 
 //------------------login Finction --------------------//
@@ -44,13 +45,17 @@ let login = () => {
             icon: "success",
             title: "Login successfully",
           });
-
-        if(loginEmail.value,loginPassword.value){
-            // page redirection
-        setTimeout (()=>{
-          location.href = "../Dashboard/dashboard.html"
-        },500)
-        }
+// redirect to dashboard
+          onAuthStateChanged(auth, (user) => {
+            if (user) {
+              const uid = user.uid;
+              // page redirection
+              setTimeout (()=>{
+                location.href = "../Dashboard/dashboard.html"
+              },1000)
+              // ...
+            } 
+          })
 
   })
   .catch((error) => {
@@ -107,7 +112,7 @@ let login = () => {
 
     
   });
-
+;
 }
     
 
@@ -117,22 +122,27 @@ let googleSignIn = ()=> {
 
   signInWithPopup(auth, provider)
     .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
+       
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      // The signed-in user info.
       const user = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
+      // redirect to dashboard
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          // page redirection
+          setTimeout (()=>{
+            location.href = "../Dashboard/dashboard.html"
+          },1000)
+        } 
+      });
     }).catch((error) => {
-      // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
       const email = error.customData.email;
-      // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
+      console.log(errorMessage);
+      
     });
 
 }
@@ -144,3 +154,4 @@ let googleSignIn = ()=> {
   googleBtn.addEventListener('click'  , googleSignIn)
 
  
+  
