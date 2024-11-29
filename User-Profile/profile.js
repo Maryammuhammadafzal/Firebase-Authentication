@@ -22,6 +22,7 @@ import {
 let uid = localStorage.getItem("uid");
 let data;
 // DOM elements ka reference
+let profileImage = document.getElementById("profileImage")
 const userName = document.getElementById("userName");
 const userEmail = document.getElementById("userEmail");
 const userPhone = document.getElementById("userPhone");
@@ -53,13 +54,11 @@ const getUserByUIDField = async () => {
     console.error("Error fetching document:", error);
   }
 
-  localStorage.setItem('email' , data.email);
-  localStorage.setItem('phone' , data.phone)
-  localStorage.setItem('address' , data.address)
-  localStorage.setItem('fullName' , data.fullName)
-  localStorage.setItem('userName' , data.fullName)
-
-
+  localStorage.setItem("email", data.email);
+  localStorage.setItem("phone", data.phone);
+  localStorage.setItem("address", data.address);
+  localStorage.setItem("fullName", data.fullName);
+  localStorage.setItem("userName", data.fullName);
 
   // Update DOM elements
   userEmail.innerText = data.email;
@@ -89,107 +88,106 @@ document.getElementById("verifyEmail").addEventListener("click", async () => {
       icon: "success",
       title: "Email Has Been Sent",
     });
+    userVerify.innerHTML = "Yes";
   });
 });
 
 //   update profile
 
-document.getElementById("updateBtn").addEventListener("click", async() => {
-  // Swal.fire({
-
-  //   title: "PopOutTitle"
-  //   [{
-
-  //     text: "Your Name:",
-  //     input: "text", 
-  //     inputValue: userName.innerText, 
-  //     inputPlaceholder: "Enter your name",
-      
-  //   },
-  //   {
-
-  //     text: "Your Name:",
-  //     input: "text", 
-  //     inputValue: userName.innerText, 
-  //     inputPlaceholder: "Enter your name",
-      
-  //   },
-  //    {showCancelButton: true}
-
-  // ]
-  // })
-  // .then((result) => {
-  //   if (result.isDismissed) return; 
-  //   if (result.value === "") {
-  //     Swal.showValidationMessage("You need to write something!");
-  //     return false;
-  //   }
-//     let userName = document.getElementById("userName");
-//     userName.innerText = result.value || "Unknown";
-
-//     updateProfile(auth.currentUser, {
-//       displayName: `${userName.innerText}`,
-//     })
-//       .then(() => {
-//         console.log("update");
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   });
-let updatedName;
-let updatedDis;
-const { value: formValues } = await Swal.fire({
-  title: "Update profile",
-  html: `
+document.getElementById("updateBtn").addEventListener("click", async () => {
+  let updatedName;
+  let updatedDis;
+  const { value: formValues } = await Swal.fire({
+    title: "Update profile",
+    html: `
     <input id="swal-input1" class="swal2-input" placeholder="${userName.innerText}" >
     <input id="swal-input2" class="swal2-input" placeholder="${userDis.innerText}">
   `,
-  focusConfirm: false,
-  preConfirm: () => {
-    return [
-      updatedName = localStorage.setItem("userName" , document.getElementById("swal-input1").value) ,
-      updatedDis = localStorage.setItem("updatedDis" , document.getElementById("swal-input2").value) ,
-      
-    ];
+    focusConfirm: false,
+    preConfirm: () => {
+      return [
+        (updatedName = localStorage.setItem(
+          "userName",
+          document.getElementById("swal-input1").value
+        )),
+        (updatedDis = localStorage.setItem(
+          "updatedDis",
+          document.getElementById("swal-input2").value
+        )),
+      ];
+    },
+  });
+  if (formValues) {
+    Swal.fire(JSON.stringify(formValues));
+    userName.innerText = localStorage.getItem("updatedName");
+    userDis.innerText = localStorage.getItem("updatedDis");
   }
 });
-if (formValues) {
-  Swal.fire(JSON.stringify(formValues));
-  userName.innerText = localStorage.getItem("updatedName") ; 
-  userDis.innerText = localStorage.getItem("updatedDis"); 
-}
 
-});
+// update image
 
-// document.getElementById("profileImg").addEventListener("click" , async()=>{
-//   const { value: url } = await Swal.fire({
-//     input: "url",
-//     inputLabel: "URL address",
-//     inputPlaceholder: "Enter the URL"
-//   });
+profileImage && profileImage.addEventListener("click" , async()=>{
+  const { value: url } = await Swal.fire({
+    input: "url",
+    inputLabel: "Image URL",
+    inputPlaceholder: "Enter the image URL"
+  });
 
-// updateProfile(auth.currentUser, {
+updateProfile(auth.currentUser, {
 
-//           photoURL: `${url}`
-//   })
-//     .then(() => {
-//       console.log('update')
-//     })
-//     .catch(error => {
-//       console.log(error)
-//     })
-// })
+          photoURL: `${url}`
+        })
+        .then(() => {
+      localStorage.setItem('profile-img' , url)
+      profileImage.src =  localStorage.getItem('profile-img');
+    })
+    .catch(error => {
+      console.log(error)
+    })
+})
 
 // sigh out
-let logoutBtn = document
-  .getElementById("logoutBtn")
-  .addEventListener("click", () => {
+let logoutBtn = document.getElementById("logoutBtn").addEventListener("click", () => {
     signOut(auth)
       .then(() => {
-        console.log("user has been signed out");
+        window.location.href = '../Login-form/login.html'
+        console.log("user has been log out");
       })
       .catch((error) => {
         console.log(error);
       });
   });
+  // Swal.fire({
+
+  //   title: "PopOutTitle",
+  //     text: "Your Name:",
+  //     input: "text",
+  //     inputValue: userName.innerText,
+  //     inputPlaceholder: "Enter your name",
+  //     text: "Your Name:",
+  //     input: "text",
+  //     inputValue: userName.innerText,
+  //     inputPlaceholder: "Enter your name",
+  //    showCancelButton: true
+
+  
+  // })
+  // .then((result) => {
+  //   if (result.isDismissed) return;
+  //   if (result.value === "") {
+  //     Swal.showValidationMessage("You need to write something!");
+  //     return false;
+  //   }
+  //     let userName = document.getElementById("userName");
+  //     userName.innerText = result.value || "Unknown";
+
+  //     updateProfile(auth.currentUser, {
+  //       displayName: `${userName.innerText}`,
+  //     })
+  //       .then(() => {
+  //         console.log("update");
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   });
