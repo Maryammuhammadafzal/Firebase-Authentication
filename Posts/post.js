@@ -1,23 +1,27 @@
 import {
-    db,
-    collection,
-    addDoc,
-    getDocs,
-    doc,
-    setDoc,
-    Timestamp,
-    deleteDoc,
-    deleteField,
-    getDatabase, ref, set
-    ,child , get , update , remove
+  db,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  setDoc,
+  Timestamp,
+  deleteDoc,
+  deleteField,
+  getDatabase,
+  ref,
+  set,
+  child,
+  get,
+  update,
+  remove
+} from '../firebase.js'
 
-} from "../firebase.js";
+let uid = localStorage.getItem('uid')
 
-let uid = localStorage.getItem("uid")
-
-let postTitle = document.getElementById('postTitle');
-let postDis = document.getElementById('postDis');
-let postImage = document.getElementById('postImage');
+let postTitle = document.getElementById('postTitle')
+let postDis = document.getElementById('postDis')
+let postImage = document.getElementById('postImage')
 
 let createPost = document.getElementById('createPost')
 let editContainer = document.getElementById('editContainer')
@@ -27,14 +31,14 @@ let modalTitle = document.getElementById('modalTitle')
 let modalDis = document.getElementById('modalDis')
 let modalFile = document.getElementById('modalFile')
 
-console.log(allPosts);
+console.log(allPosts)
 
 // Close Modal When Clicking Outside of Modal Content
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      modal.style.display = "none"; // Hide modal
-    }
-  });
+window.addEventListener('click', event => {
+  if (event.target === modal) {
+    modal.style.display = 'none' // Hide modal
+  }
+})
 
 // // show and close the posts
 // let createPost = document.getElementById('createPost')
@@ -50,97 +54,126 @@ window.addEventListener("click", (event) => {
 // })
 
 // Show All Posts
-let showAllPosts = ()=>{
+let showAllPosts = () => {
+    
+    if(null){
+        document.write("No Post available")
+    }
+else{
+    const dbRef = ref(getDatabase());
+get(child(dbRef, `posts/${uid}`)).then((snapshot) => {
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+    data.forEach((post) => {
+        allPosts.innerHTML = `<div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <img src="${post.post_picture}"
+                        id="postImage" alt="image" class="img-fluid"
+                        style="width: 100%; height: 250px; object-fit: cover;">
+                        <div class="d-flex justify-content-center my-2 py-1 w-100">
+                        <div class="postContent w-75">
+                            <h5 class="my-3" id="postTitle">${post.userTitle}</h5>
+                            <p class="text-muted mb-1" id="postDis">${post.discription}</p>
+                        </div>
 
-    allPosts.innerHTML = 
-    `<div class="row">
-                    <div class="col-lg-12">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                    id="postImage" alt="image" class="img-fluid"
-                                    style="width: 100%; height: 250px; object-fit: cover;">
-                                    <div class="d-flex justify-content-center my-2 py-1 w-100">
-                                    <div class="postContent w-75">
-                                        <h5 class="my-3" id="postTitle">John Smith</h5>
-                                        <p class="text-muted mb-1" id="postDis">Full Stack Developer</p>
-                                    </div>
-
-                                    <div class="postbuttons">
-                                        <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-outline-primary ms-1" id="editBtn">Edit</button>
-                                    <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-outline-primary ms-1" id="deleteBtn">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="postbuttons">
+                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                            class="btn btn-outline-primary ms-1" id="editBtn">Edit</button>
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init
+                            class="btn btn-outline-primary ms-1" id="deleteBtn">Delete</button>
                         </div>
                     </div>
-                </div>`
+                </div>
+            </div>
+        </div>
+    </div>`
+        })
+
+    // console.log(snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+}
+  
 }
 
 showAllPosts()
 
 // Add the post
-let createdPost =  async() => {
-    
-    modal.style.display = "flex" 
-    
+let createdPost = async () => {
+  modal.style.display = 'flex'
 
-     ///---------------------Firestore work ----------------//
-         let AddData = ()=>{
-            try{
-         
-                let writeUserData = (uid, title, discription, imageUrl) => {
-                 let title =  modalTitle.value 
-                 let discription =  modalDis.value 
-                 let imageUrl =  modalFile.value 
-               const db = getDatabase();
-               set(ref(db, 'posts/' + uid), {
-                 usertitle: title,
-                 discription: discription,
-                 post_picture : imageUrl
-               });
-             }
-            }
-            catch(error){
-               console.log(error)
-            }
-         }    
-    
-      
-              //Add data
-            //   try {
-            //     await setDoc(doc(db, "posts", uid), {
-                 
-            //     });
+  ///---------------------Firebase Database work ----------------//
+  let addData = () => {
+    const db = getDatabase()
+    set(ref(db, 'posts/' + uid), {
+      usertitle: modalTitle.value,
+      discription: modalDis.value,
+      post_picture: modalFile.src
+    })
+      .then(() => {
+        //Succesfully creat post
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: toast => {
+            toast.onmouseenter = Swal.stopTimer
+            toast.onmouseleave = Swal.resumeTimer
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Post Created Successfully'
+        })
+      })
+      .catch(error => {
+        console.log(error)
+        Swal.fire({
+          title: 'Error',
+          text: 'Unsuccessful',
+          icon: 'error'
+        })
+      })
+  }
+  
+  addData()
+  //Add data
+  //   try {
+  //     await setDoc(doc(db, "posts", uid), {
 
-            //     //Succesfully signed in
-            //     const Toast = Swal.mixin({
-            //       toast: true,
-            //       position: "top-end",
-            //       showConfirmButton: false,
-            //       timer: 3000,
-            //       timerProgressBar: true,
-            //       didOpen: (toast) => {
-            //         toast.onmouseenter = Swal.stopTimer;
-            //         toast.onmouseleave = Swal.resumeTimer;
-            //       },
-            //     });
-            //     Toast.fire({
-            //       icon: "success",
-            //       title: "Register successfully",
-            //     });
+  //     });
 
-            //     console.log("Document written with ID: ", uid);
-            //   } catch (e) {
-            //     console.error("Error adding document: ", e);
-            //   }
-              
-              
+  //     //Succesfully signed in
+  //     const Toast = Swal.mixin({
+  //       toast: true,
+  //       position: "top-end",
+  //       showConfirmButton: false,
+  //       timer: 3000,
+  //       timerProgressBar: true,
+  //       didOpen: (toast) => {
+  //         toast.onmouseenter = Swal.stopTimer;
+  //         toast.onmouseleave = Swal.resumeTimer;
+  //       },
+  //     });
+  //     Toast.fire({
+  //       icon: "success",
+  //       title: "Register successfully",
+  //     });
+
+  //     console.log("Document written with ID: ", uid);
+  //   } catch (e) {
+  //     console.error("Error adding document: ", e);
+  //   }
 }
 createPost && createPost.addEventListener('click', createdPost)
-
 
 // try{
 //     let postTitle = document.getElementById('post-title');
@@ -148,7 +181,6 @@ createPost && createPost.addEventListener('click', createdPost)
 
 //     let posts = document.getElementById('posts');
 
-  
 // if (true){
 //         posts.innerHTML += `<div class="card  mt-3" id="post-card">
 //         <div class="card-header fontStyle">
@@ -165,11 +197,11 @@ createPost && createPost.addEventListener('click', createdPost)
 //         </div>`
 
 //         posts.className += ' border-green';
-        
+
 //         postTitle.value = "";
 //         postDiscription.value = "";
-// }  
-  
+// }
+
 //     else {
 //         Swal.fire({
 //             title: "Write something?",
@@ -177,39 +209,35 @@ createPost && createPost.addEventListener('click', createdPost)
 //             icon: "question"
 //         });
 //     }
-  
 
 // }
 // document.innerHTML =`<div class="modal-dialog modal-dialog-centered">...</div>`
 // catch(err){
 //     console.log(err);
 //     }
-    
-    //-----------------Firestore --------------------//
-    
-    // try {
-    //     const docRef = await addDoc(collection(db, "userposts"), {
-    //         postTitle: "${postTitle.value}",
-    //         postDiscrption: "${postDiscription.value",
-    //         time: Timestamp.fromDate(new Date())
-    //     });
-    //     console.log("Document written with ID: ", docRef.id);
-    // } catch (e) {
-    //     console.error("Error adding document: ", e);
-    // }
-    
 
+//-----------------Firestore --------------------//
+
+// try {
+//     const docRef = await addDoc(collection(db, "userposts"), {
+//         postTitle: "${postTitle.value}",
+//         postDiscrption: "${postDiscription.value",
+//         time: Timestamp.fromDate(new Date())
+//     });
+//     console.log("Document written with ID: ", docRef.id);
+// } catch (e) {
+//     console.error("Error adding document: ", e);
+// }
 
 // let editPostBtn = document.getElementById('editpostBtn')
 // let removePostBtn = document.getElementById('remove')
-// console.log(editPostBtn); 
+// console.log(editPostBtn);
 
 // let editPost = async () => {
 
 //     let card = event.target.closest('.card');
 //     let titleElement = card.querySelector('.card-title');
 //     let descriptionElement = card.querySelector('.card-text');
-
 
 //     let submitPost = document.getElementById('submitPost')
 //     submitPost.addEventListener('click', () => {
@@ -244,41 +272,33 @@ createPost && createPost.addEventListener('click', createdPost)
 
 // })
 
-
 // function remove(event) {
 //     event.target.parentNode.parentNode.remove();
 
 //     posts.className -= ' border-green';
 // }
 
-
 // function addBg1() {
 //     let postCard = document.getElementById('post-card');
 //     postCard.className += " add-bg-1"
 // }
-
 
 // function addBg2() {
 //     let postCard = document.getElementById('post-card');
 //     postCard.className += " add-bg-2"
 // }
 
-
 // function addBg3() {
 //     let postCard = document.getElementById('post-card');
 //     postCard.className += " add-bg-3"
 // }
-
 
 // function addBg4() {
 //     let postCard = document.getElementById('post-card');
 //     postCard.className += " add-bg-4"
 // }
 
-
 // function addBg5() {
 //     let postCard = document.getElementById('post-card');
 //     postCard.className += " add-bg-5"
 // }
-
-
