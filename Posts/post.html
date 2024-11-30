@@ -7,7 +7,7 @@
     <title>Post</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="./post.css">
     <link href="
         https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css
@@ -18,80 +18,50 @@
 </head>
 
 <body>
-    <!-- post navbar -->
-    <nav class="navbar navbar-expand-lg bg-green h-100">
-        <div class="container-fluid w-50 d-flex justify-content-center">
-            <a class="navbar-brand text-white fontStyle " href="#">Your Post</a>
-        </div>
-        <a class="navbar-brand " id="createPost" href="#">+</a>
-    </nav>
+
     
-    <!-- Post maker -->
-    <div class="container-fluid mt-4 post-container" id="postContainer">
-                <div class="card p-4 w-80 border-green">
-                    <form class="p-2">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label fontStyle">Title</label>
-                            <input type="text" class="form-control" id="post-title" aria-describedby="emailHelp">
-                        </div>
-                        <div class="form-floating fontStyle">
-                            <textarea class="form-control " placeholder="Leave a comment here" id="post-discription"
-                                style="height: 100px"></textarea>
-                            <label for="floatingTextarea2 ">Description</label>
-                        </div>
-                        <div class="images p-2 m-2">
-                            <img src="../images/post-images/bg-1.jfif" alt="bg-img" onclick="addBg1()">
-                            <img src="../images/post-images/bg-2.jfif" alt="bg-img" onclick="addBg2()">
-                            <img src="../images/post-images/bg-3.jfif" alt="bg-img" onclick="addBg3()">
-                            <img src="../images/post-images/bg-4.jfif" alt="bg-img" onclick="addBg4()">
-                            <img src="../images/post-images/bg-5.jfif" alt="bg-img" onclick="addBg5()">
 
-                        </div>
-                        <button type="button" class="btn btn-primary mt-2 fontStyle color-blue" id="submitPost">Submit</button>
-                        <button type="button" class="btn btn-primary mt-2 fontStyle color-blue" id="closePost">Close</button>
-                    </form>
+    <!-- post navbar -->
+    <div class="container">
+        <section style="background-color: #eee;">
+            <div class="container py-2">
+                <div class="row">
+                    <div class="col">
+                        <nav aria-label="breadcrumb"
+                            class="bg-body-tertiary rounded-3 p-3 mb-4 d-flex justify-content-between">
+                            <h3>All Posts</h3>
+                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-outline-primary ms-1" id="createPost">Create Post</button>
+                        </nav>
+                    </div>
                 </div>
-            </div>  
-        </div>
 
- <!-- Post body -->
- <div class="container-fluid mt-4" >
-        <!-- showing post -->
-        <div class="col-12 col-sm-12 col-md-8 p-3 posts" id="posts"></div>
-        </div>
+             <div id="allPosts">
 
-<!-- Edit post -->
- <div class="container-fluid mt-4 editContainer" >
-    <div class="card p-4 w-80 border-green">
-        <form class="p-2">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label fontStyle">Title</label>
-                <input type="text" class="form-control" id="post-title" aria-describedby="emailHelp">
-            </div>
-            <div class="form-floating fontStyle">
-                <textarea class="form-control " placeholder="Leave a comment here" id="post-discription"
-                    style="height: 100px"></textarea>
-                <label for="floatingTextarea2 ">Description</label>
-            </div>
-            <div class="images p-2 m-2">
-                <img src="../images/post-images/bg-1.jfif" alt="bg-img" onclick="addBg1()">
-                <img src="../images/post-images/bg-2.jfif" alt="bg-img" onclick="addBg2()">
-                <img src="../images/post-images/bg-3.jfif" alt="bg-img" onclick="addBg3()">
-                <img src="../images/post-images/bg-4.jfif" alt="bg-img" onclick="addBg4()">
-                <img src="../images/post-images/bg-5.jfif" alt="bg-img" onclick="addBg5()">
+             </div>
 
-            </div>
-            <button type="button" class="btn btn-primary mt-2 fontStyle color-blue" id="submitPost">Submit</button>
-            <button type="button" class="btn btn-primary mt-2 fontStyle color-blue" id="closePost">Close</button>
-        </form>
+        </section>
     </div>
-</div> 
-        </div>
+   
+
+ <!-- Modal Box -->
+ <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Create a New Post</h2>
+      <div id="postForm" >
+        <input type="text" name="title" id="modalTitle" placeholder="Title">
+        <textarea placeholder="Write your post here..." id="modalDis"></textarea>
+        <input type="file" name="file" id="modalFile">
+        <button type="button" id="SubmitPost">Post</button>
+      </div>
+    </div>
+  </div>
 
 
     <script type="module" src="./post.js"></script>
     <script type="module" src="../firebase.js"></script>
-        
+
 </body>
 
 </html>

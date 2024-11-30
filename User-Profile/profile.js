@@ -61,11 +61,11 @@ const getUserByUIDField = async () => {
   localStorage.setItem("userName", data.fullName);
 
   // Update DOM elements
-  userEmail.innerText = data.email;
-  userPhone.innerText = data.phoneNo;
-  userAddress.innerText = data.address;
-  userFullName.innerText = data.fullName;
-  userName.innerText = data.fullName;
+  userEmail.innerText = localStorage.getItem('email')
+  userPhone.innerText = localStorage.getItem('phone')
+  userAddress.innerText = localStorage.getItem('address')
+  userFullName.innerText = localStorage.getItem('fullName')
+  userName.innerText = localStorage.getItem('userName')
 };
 getUserByUIDField();
 
@@ -140,6 +140,117 @@ updateProfile(auth.currentUser, {
         .then(() => {
       localStorage.setItem('profile-img' , url)
       profileImage.src =  localStorage.getItem('profile-img');
+    })
+    .catch(error => {
+      console.log(error)
+    })
+})
+
+
+
+
+//  -------facebook url-------------//
+facebookLink.addEventListener( 'click' ,async(event)=>{
+  event.preventDefault()
+  const { value: url } = await Swal.fire({
+    input: "url",
+    inputLabel: "Facebook Profile URL",
+    inputPlaceholder: "Enter the URL"
+  });
+
+   // facebook url pattern
+   const facebookUrlPattern = /^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9(\.\?)?]/;
+
+   if (!facebookUrlPattern.test(url)) {
+    // Show error if the URL is invalid
+    Swal.fire({
+      icon: "error",
+      title: "Invalid URL",
+      text: "Please enter a valid Facebook profile URL.",
+    });
+    return; 
+  }
+
+updateProfile(auth.currentUser, {
+
+          photoURL: `${url}`
+        })
+        .then(() => {
+      localStorage.setItem('facebookLink' , url)
+      let linkTag = document.getElementsByClassName('link')[0];
+      linkTag.href =  localStorage.getItem('facebookLink');
+      linkTag.title =  localStorage.getItem('facebookLink');
+    })
+    .catch(error => {
+      console.log(error)
+    })
+})
+// ----------twtter url----------//
+twitterLink.addEventListener( 'click' ,async(event)=>{
+  event.preventDefault()
+  const { value: url } = await Swal.fire({
+    input: "url",
+    inputLabel: "URL",
+    inputPlaceholder: "Enter the URL"
+  });
+ // twitter url pattern
+  const twitterUrlPattern = /^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
+
+  if (!twitterUrlPattern.test(url)) {
+    // Show error if the URL is invalid
+    Swal.fire({
+      icon: "error",
+      title: "Invalid URL",
+      text: "Please enter a valid Facebook profile URL.",
+    });
+    return; 
+  }
+
+updateProfile(auth.currentUser, {
+
+          photoURL: `${url}`
+        })
+        .then(() => {
+      localStorage.setItem('twitterLink' , url)
+      let linkTag = document.getElementsByClassName('link')[1];
+      linkTag.href =  localStorage.getItem('twitterLink');
+      linkTag.title =  localStorage.getItem('twitterLink');
+    })
+    .catch(error => {
+      console.log(error)
+    })
+})
+// ----- Instagram url --------//
+instagramLink.addEventListener( 'click' ,async(event)=>{
+  event.preventDefault()
+  const { value: url } = await Swal.fire({
+    input: "url",
+    inputLabel: "URL",
+    inputPlaceholder: "Enter the URL"
+  });
+
+ // Instagram url pattern
+  const instagramUrlPattern = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
+  
+  if (!instagramUrlPattern.test(url)) {
+    // Show error if the URL is invalid
+    Swal.fire({
+      icon: "error",
+      title: "Invalid URL",
+      text: "Please enter a valid Facebook profile URL.",
+    });
+    return; 
+  }
+
+updateProfile(auth.currentUser, {
+
+          photoURL: `${url}`
+        })
+        .then(() => {
+      localStorage.setItem('instagramLink' , url)
+      let linkTag = document.getElementsByClassName('link')[2];
+      linkTag.href =  localStorage.getItem('instagramLink');
+      linkTag.title =  localStorage.getItem('instagramLink');
     })
     .catch(error => {
       console.log(error)

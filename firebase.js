@@ -28,7 +28,7 @@ import {
    query,
    where
  } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js'
-
+import {getDatabase, ref, set ,child , get , update , remove} from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js'
 
 
 
@@ -47,7 +47,7 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 const db = getFirestore(app)
-export {  }
+const database = getDatabase();
 
 
 
@@ -74,5 +74,6 @@ GoogleAuthProvider,
 onSnapshot ,
 getDoc,
 query,
-where
- } 
+where,
+getDatabase, ref, set
+,child , get , update , remove } 
