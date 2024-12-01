@@ -28,7 +28,7 @@ import {
    query,
    where
  } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js'
-import {getDatabase, ref, set ,child , get , update , remove} from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js'
+import {getDatabase, ref, set ,child , get , update , remove, onValue } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js'
 
 
 
@@ -76,4 +76,4 @@ getDoc,
 query,
 where,
 getDatabase, ref, set
-,child , get , update , remove } 
+,child , get , update , remove,onValue  } 
