@@ -42,8 +42,14 @@ window.addEventListener('click', event => {
 })
 // Close Modal When Clicking on close button
 window.closeModal = document.getElementById('closeModal').addEventListener('click', () => {
-    postContainer.style.display = 'none'
+  modal.style.display = 'none' // Hide modal
 })
+
+let uploadImage = () =>{
+  let imageFile = modalFile.files[0] 
+  console.log(imageFile);
+}
+modalFile && modalFile.addEventListener('change' , uploadImage)
 
 // Add the post
 let createdPost = async () => {
@@ -57,7 +63,7 @@ let createdPost = async () => {
       set(ref(db, 'posts/' + uid), {
         usertitle: modalTitle.value,
         discription: modalDis.value,
-        post_picture: modalFile.src
+        post_picture: uploadImage()
       })
         .then(() => {
           //Succesfully creat post
@@ -110,7 +116,7 @@ let showAllPosts = () => {
         let getPostImage = snapshot.child('post_picture').val();
       
         
-          allPosts.innerHTML = `<div class="row">
+          allPosts.innerHTML += `<div class="row">
       <div class="col-lg-12">
           <div class="card mb-4">
               <div class="card-body">
